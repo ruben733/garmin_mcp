@@ -37,7 +37,7 @@ RUN mkdir -p /root/.garminconnect && \
 # EXPOSE 8000
 
 # Set the entrypoint to run the MCP server
-ENTRYPOINT ["/bin/sh", "-c", "if [ -f /etc/secrets/garmin_tokens.json ]; then cp /etc/secrets/garmin_tokens.json /root/.garminconnect/garmin_tokens.json && chmod 600 /root/.garminconnect/garmin_tokens.json; fi; exec garmin-mcp"]
+ENTRYPOINT ["/bin/sh", "-c", "echo '=== GARMIN TOKEN CHECK ==='; ls -l /etc/secrets/garmin_tokens.json 2>&1 || true; mkdir -p /root/.garminconnect; if [ -f /etc/secrets/garmin_tokens.json ]; then cp /etc/secrets/garmin_tokens.json /root/.garminconnect/garmin_tokens.json && chmod 600 /root/.garminconnect/garmin_tokens.json; fi; ls -l /root/.garminconnect/garmin_tokens.json 2>&1 || true; echo '=== END TOKEN CHECK ==='; exec garmin-mcp"]
 
 # Health check (optional - adjust based on your needs)
 # HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
