@@ -433,7 +433,8 @@ def init_api(email, password):
         finally:
             sys.stderr = old_stderr
 
-    except (FileNotFoundError, GarminConnectConnectionError, GarminConnectTooManyRequestsError, GarminConnectAuthenticationError):
+except (FileNotFoundError, GarminConnectConnectionError, GarminConnectTooManyRequestsError, GarminConnectAuthenticationError) as err:
+        print(f"GARMIN LOGIN DIAGNOSTIC: {type(err).__name__}", file=sys.stderr)
         # Session is expired. You'll need to log in again
 
         # Check if we're in a non-interactive environment without credentials
