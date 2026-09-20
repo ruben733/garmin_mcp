@@ -23,3 +23,19 @@ playground/*
 scratch/*
 tests/fixtures/captured/*
 !tests/fixtures/captured/poc_walk_run.json
+
+# Credentials and local backups
+.env.*
+!.env.example
+garmin_tokens.json
+.garminconnect*/
+*.backup
+.tokens-*.tmp
+
+# Token exports and legacy OAuth files
+garmin_tokens*.json
+oauth1_token.json
+oauth2_token.json
+**/garmin_tokens*.json
+**/oauth1_token.json
+**/oauth2_token.json

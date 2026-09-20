@@ -1,7 +1,7 @@
 # Use Python 3.12 slim image for smaller size
 FROM python:3.12-slim
 
-# Note: .dockerignore is symlinked to .gitignore for unified exclusion rules
+# Explicit .dockerignore rules exclude local secrets from the build context
 
 # Set working directory
 WORKDIR /app
@@ -37,8 +37,12 @@ RUN mkdir -p /root/.garminconnect && \
 # EXPOSE 8000
 
 # Set the entrypoint to run the MCP server
-ENTRYPOINT ["/bin/sh", "-c", "echo '=== GARMIN TOKEN CHECK ==='; ls -l /etc/secrets/garmin_tokens.json 2>&1 || true; mkdir -p /root/.garminconnect; if [ -f /etc/secrets/garmin_tokens.json ]; then cp /etc/secrets/garmin_tokens.json /root/.garminconnect/garmin_tokens.json && chmod 600 /root/.garminconnect/garmin_tokens.json; fi; ls -l /root/.garminconnect/garmin_tokens.json 2>&1 || true; echo '=== END TOKEN CHECK ==='; exec garmin-mcp"]
+COPY entrypoint.sh /app/entrypoint.sh
 
 # Health check (optional - adjust based on your needs)
 # HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
 #   CMD python -c "import sys; sys.exit(0)"
+
+RUN sed -i 's/\r$//' /app/entrypoint.sh && sh -n /app/entrypoint.sh
+ENTRYPOINT ["/bin/sh", "/app/entrypoint.sh"]
+CMD ["garmin-mcp"]

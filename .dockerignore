@@ -1,1 +1,25 @@
-.gitignore
+# Explicit rules: a text file containing ".gitignore" is not a symlink.
+.git
+.env
+.env.*
+.venv
+__pycache__
+*.pyc
+*.backup
+garmin_tokens.json
+.garminconnect*
+.tokens-*.tmp
+work
+
+# Token exports and legacy OAuth files
+garmin_tokens*.json
+oauth1_token.json
+oauth2_token.json
+**/garmin_tokens*.json
+**/oauth1_token.json
+**/oauth2_token.json
+
+**/.env
+**/.env.*
+**/.garminconnect*
+**/.tokens-*.tmp

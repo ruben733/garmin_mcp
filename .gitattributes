@@ -1,0 +1,7 @@
+*.sh text eol=lf
+*.py text eol=lf
+Dockerfile text eol=lf
+.dockerignore text eol=lf
+.gitignore text eol=lf
+.gitattributes text eol=lf
+RENDER_SETUP.md text eol=lf
